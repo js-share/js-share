@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
-// middleware for async redux actions
+// middleware for async redux actions, if one wants to store async data in redux state
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
 
