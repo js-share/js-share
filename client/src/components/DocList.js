@@ -6,14 +6,14 @@ class DocList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {message: ''};
+    this.state = { message: '' };
   }
 
   componentDidMount() {
     fetch('/api/hello')
       .then(response => response.json())
       .then(json => {
-        this.setState({message: json.message});
+        this.setState({ message: json.message });
       });
   }
 
@@ -21,7 +21,7 @@ class DocList extends Component {
     return (
       <div>
         {this.state.message || 'loading...'}
-        <MyDocs />
+        <MyDocs className="table-responsive-sm" />
         <SharedDocs />
       </div>
     );
