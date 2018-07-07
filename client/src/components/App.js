@@ -4,11 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './Header.js';
 import Home from './Home.js';
-import Hello from './Hello.js';
-import MyDocs from './MyDocs.js';
+import DocList from './DocList.js';
 
 // % AUTH ROUTES:
-import Signout from './auth/Signout.js';
 import RequireAuth from './auth/RequireAuth.js';
 import Protected from './auth/Protected.js';
 
@@ -40,10 +38,9 @@ class App extends Component {
             setLoggedOut={this.setLoggedOut}
           />
           <Switch>
-            <Route exact path="/" component={() => <Home auth={this.state.auth} />} />
-            <Route path="/hello" component={Hello} />
-            <Route path="/documents" component={MyDocs} />
-            <Route path="/signout" component={Signout} />
+            <Route exact path="/" component={() => <Home auth={this.state.auth} setLoggedIn={this.setLoggedIn} />} />
+            <Route path="/documents" component={() => <DocList auth={this.state.auth} />} />
+
             <Route path="/protected" component={RequireAuth(Protected)} />
           </Switch>
         </div>
