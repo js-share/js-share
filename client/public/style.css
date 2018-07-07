@@ -3,26 +3,5 @@ body {
 }
 
 .container {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  /* background: #fafafa; */
-}
-
-.login {
-  grid-row: 2;
-  margin: 10rem 3rem;
-}
-
-.login-btn, .signup-btn {
-  background-color: #3897f0;
-  border-color: #3897f0;
-  color: #fff;
-  font-size: 18px;
-  width: 40%;
-  padding: .5rem;
-  margin: 2rem;
-  border-radius: 3px;
-  border-style: solid;
-  border-width: 1px;
-  cursor: pointer;
+  margin-top: 5rem;
 }

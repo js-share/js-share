@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
 export default ChildComponent => {
+  // eslint-disable-next-line
   class ComposedComponent extends Component {
     componentDidMount() {
       this.shouldNavigateAway();
@@ -22,10 +22,5 @@ export default ChildComponent => {
     }
   }
 
-  function mapStateToProps(state) {
-    return {auth: state.auth.auth};
-  }
-
-  return connect(mapStateToProps)(ComposedComponent);
+  return ChildComponent;
 };
-
