@@ -1,7 +1,8 @@
 import React from 'react'
 
 const MyDocs = () => (
-  <div>
+  <div className="container">
+    <h3>My Documents</h3>
     <table className="table table-striped">
       <thead>
         <tr>
