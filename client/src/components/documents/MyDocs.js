@@ -6,12 +6,12 @@ const MyDocs = () => (
     <table className="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Id</th>
+          <th scope="col">ID</th>
           <th scope="col">Username</th>
-          <th scope="col">Doc Title</th>
+          <th scope="col">Document Title</th>
           <th scope="col">Last Edited</th>
-          <th scope="col">Edit Settings</th>
-          <th scope="col">Edit Document</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -20,24 +20,24 @@ const MyDocs = () => (
           <td>Mark</td>
           <td>Otto</td>
           <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
+          <td><button className="btn btn-sm btn-secondary">Edit Document</button></td>
+          <td><button className="h-75 btn btn-md  btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></button> </td>
         </tr>
         <tr>
-          <th scope="row">2</th>
-          <td>{"Jacob"}</td>
-          <td>{"Thornton"}</td>
-          <td>{"fat"}</td>
-          <td>{"fat"}</td>
-          <td>{"fat"}</td>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+          <td><button className="btn btn-sm btn-secondary">Edit Document</button></td>
+          <td><button className="h-75 btn btn-md  btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></button> </td>
         </tr>
         <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+          <td><button className="btn btn-sm btn-secondary">Edit Document</button></td>
+          <td><button className="h-75 btn btn-md  btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></button> </td>
         </tr>
       </tbody>
     </table>

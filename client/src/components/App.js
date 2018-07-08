@@ -22,13 +22,9 @@ class App extends Component {
     axios.get('/api/current_user')
       .then(
         (res) => {
-          this.setState({ auth: true });
+          this.setState({ auth: res.data || false });
         }
       )
-      .catch(err => {
-        console.log(err);
-        this.setState({ auth: false });
-      })
   }
   render() {
     return (

@@ -1,37 +1,69 @@
-import React from 'react'
+import React, { Component } from 'react';
+import axios from 'axios';
 
-const CreateDoc = () => (
-  <div className="container">
-    <form>
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Document Title</label>
-        <input type="text" class="form-control" id="doctitle" placeholder="Enter Documet Title" />
+class CreateDoc extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      owner: null,
+      docTitle: "",
+      sharedUsers: null
+
+    };
+  }
+
+  render() {
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      let doctitle = document.getElementById('doctitle').value;
+      let sharedwith = document.getElementById('sharedwith').value;
+      console.log(doctitle, sharedwith);
+      document.getElementById('doctitle').value = '';
+      document.getElementById('sharedwith').value = '';
+    }
+
+    function handleCancel(event) {
+      event.preventDefault();
+      document.getElementById('doctitle').value = '';
+      document.getElementById('sharedwith').value = '';
+    }
+
+    axios.post(
+      '/api/createdoc', {
+        'owner': 'sidhi',
+        'name': this.doctitle,
+        'text_content': this.doctext,
+        'permitted_users': this.sharedwith
+      })
+      .then(
+        (res) => console.log(res)
+      )
+      .catch(
+        (err) => console.log(err)
+      )
+
+    return (
+      <div className="container">
+        <form>
+          <div className="form-group">
+            <label htmlFor="doctitle">Document Title</label>
+            <input type="text" className="form-control" id="doctitle" placeholder="Enter Document Title" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="doctext">Users (email addresses separated by line)</label>
+            <textarea className="form-control" id="sharedwith" rows="4"></textarea>
+          </div>
+          <div className="float-right align-self-end">
+            <button onClick={handleCancel} className="btn btn-outline-danger">Cancel</button>
+            <button onClick={handleSubmit} className="btn btn-success ml-3">Save</button>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">File Type</label>
-        <select class="form-control" id="filetype">
-          <option>{'jjavascript: === .js'}</option>
-          <option>React: === .jsx</option>
-          <option>Plaintext: ===.txt</option>
-          <option>Markdown: === .md</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect2">Select Users <span><em>Hold down cmd/ctrl to select multiple users</em></span></label>
-        <select multiple class="form-control" id="sharedwith" rows="8">
-          <option>Leo</option>
-          <option>Loka</option>
-          <option>Luna</option>
-          <option>Wilbur</option>
-          <option>Charlie</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Document Text</label>
-        <textarea class="form-control" id="doc text" rows="9"></textarea>
-      </div>
-    </form>
-  </div>
-)
+
+    )
+  }
+
+}
 
 export default CreateDoc;
