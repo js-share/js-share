@@ -17,19 +17,13 @@ class App extends Component {
     super(props);
     this.state = { auth: null }
   }
-
+  
   componentDidMount() {
-    axios.get('/api/current_user')
-      .then(
-        (res) => {
-          this.setState({ auth: true });
-        }
-      )
-      .catch(err => {
-        console.log(err);
-        this.setState({ auth: false });
-      })
+    axios.get('/api/current_user').then(res => {
+      this.setState({ auth: res.data || false });
+    });
   }
+  
   render() {
     return (
       <BrowserRouter>
