@@ -9,7 +9,7 @@ const passport = require('passport');
 
 // set up postgres pool
 const {Pool} = require('pg');
-const pool = new Pool();
+const pool = new Pool({connectionString: process.env.pgURI});
 
 app.use(bodyParser.json());
 app.use(
