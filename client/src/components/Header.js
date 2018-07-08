@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+
 class Header extends Component {
   renderLinks() {
+    if (this.props.auth === null) {
+      return <div></div>
+    }
+
     if (this.props.auth) {
       return [
         <li className="nav-item" key={'hello'}>
           <Link className="nav-link " to="/">Home</Link>
         </li>,
-        <li><Link
+        <li className="nav-item" key={'newdoc'}><Link
           className="btn btn-success my-2 my-sm-0"
           to="/newdoc"
           role="button"
@@ -18,7 +23,7 @@ class Header extends Component {
           <Link className="nav-link" to="/documents">Documents</Link>
         </li>,
         <li className="nav-item" key={'signout'}>
-          <Link className="nav-link float-right" to="/" onClick={this.props.setLoggedOut}>Sign Out</Link>
+          <a className="nav-link float-right" href="/api/logout">Sign Out</a>
         </li>
       ];
     }
@@ -29,7 +34,7 @@ class Header extends Component {
           <Link className="nav-link" to="/">Home</Link>
         </li>,
         <li className="nav-item" key={'signin'}>
-          <Link className="nav-link float-right" to="/documents" onClick={this.props.setLoggedIn}>Sign In</Link>
+          <a className="nav-link float-right" href="/auth/google">Sign In</a>
         </li>]
     }
   }

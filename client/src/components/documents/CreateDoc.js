@@ -10,7 +10,7 @@ const CreateDoc = () => (
       <div class="form-group">
         <label for="exampleFormControlSelect1">File Type</label>
         <select class="form-control" id="filetype">
-          <option>Javascript: === .js</option>
+          <option>{'jjavascript: === .js'}</option>
           <option>React: === .jsx</option>
           <option>Plaintext: ===.txt</option>
           <option>Markdown: === .md</option>
