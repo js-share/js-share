@@ -3,36 +3,29 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 module.exports = function(pool) {
   // serialize user into user id
-  passport.serializeUser((user_id, done) => {
-    done(null, user_id);
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
   });
-
+  
   // deserialize user from user id when attempting to authorize requests with a cookie
-  passport.deserializeUser((user_id, done) => {
-    // change from mongo to sql
+  passport.deserializeUser((id, done) => {
     // set up a client from the pool, and make a query using that client
+    console.log('starting deserialize user');
     
-    // User.findById(id).then(user => {
-    //   done(null, user);
-    // });
+    const queryText = 'select id from users where id = $1';
     
-    pool.connect(process.env.pgURI, (err, db) => {
+    pool.query(queryText, [id]).then(result => {
+      const user = result.rows[0];
+      console.log('deserialize main result: ');
+      console.log(user.id);
+      
+      // passport deserialize complete
+      done(null, user);
+    }).catch(err => {
       if (err) throw new Error(err);
-      
-      console.log('starting deserialize user');
-      
-      db.query('select user_id from users where user_id = $1', [user_id]).then((err, result) => {
-        if (err) throw new Error(err);
-        
-        console.log('deserialize successful');
-        
-        // close database connection.
-        db.end();
-      });
     });
-    
   });
-
+  
   passport.use(
     new GoogleStrategy(
       {
@@ -41,23 +34,32 @@ module.exports = function(pool) {
         callbackURL: '/auth/google/callback', // redirect after user grants permission
         proxy: true
       },
-      async (accessToken, refreshToken, profile, done) => {
-        const existingUser = await User.findOne({ googleId: profile.id });
-      
-        if (existingUser) {
-          // we already have a record with the given profile
-          return done(null, existingUser);
-        }
-      
-        // we don't have a user record with this ID, make one
-      
-        const user = await new User({ googleId: profile.id }).save();
-        done(null, user);
+      (accessToken, refreshToken, profile, done) => {
+        // upsert the profile id, name (screen name), and primary email
+        const id = profile.id;
+        const name = profile.displayName;
+        const email = profile.emails[0].value;
+        
+        const queryText = 'insert into users (id, name, email) ' +
+        'values ($1, $2, $3) ' +
+        'on conflict (id) do update set name=$2, email=$3 ' +
+        'returning *';
+        
+        pool.query(queryText, [id, name, email]).then(result => {
+          console.log(result.rows);
+          
+          const user = result.rows[0];
+          console.log('google auth:');
+          console.log(user.id);
+          
+          // passport deserialize complete
+          done(null, user);
+        }).catch(err => {
+          if (err) throw new Error(err);
+        });
       }
-      // (accessToken, refreshToken, profile, done) => {
-      // 
-      // }
     )
   );
 };
+
 
