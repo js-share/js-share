@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './Header.js';
 import Home from './Home.js';
 import DocList from './DocList.js';
+import EditDoc from './documents/EditDoc.js';
+import CreateDoc from './documents/CreateDoc.js';
+import Settings from './documents/Settings.js';
 
 // % AUTH ROUTES:
 import RequireAuth from './auth/RequireAuth.js';
-import Protected from './auth/Protected.js';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = { auth: false }
@@ -39,9 +39,10 @@ class App extends Component {
           />
           <Switch>
             <Route exact path="/" component={() => <Home auth={this.state.auth} setLoggedIn={this.setLoggedIn} />} />
-            <Route path="/documents" component={() => <DocList auth={this.state.auth} />} />
-
-            <Route path="/protected" component={RequireAuth(Protected)} />
+            <Route path="/documents" component={RequireAuth(DocList, this.state.auth)} />
+            <Route path="/editdocs" component={RequireAuth(EditDoc, this.state.auth)} />
+            <Route path="/newdoc" component={RequireAuth(CreateDoc, this.state.auth)} />
+            <Route path="/settings" component={RequireAuth(Settings, this.state.auth)} />
           </Switch>
         </div>
       </BrowserRouter>

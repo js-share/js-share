@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MyDocs from './MyDocs.js';
-import SharedDocs from './SharedDocs.js';
+import MyDocs from './documents/MyDocs.js';
+import SharedDocs from './documents/SharedDocs.js';
 
 class DocList extends Component {
   constructor(props) {
@@ -20,9 +20,9 @@ class DocList extends Component {
   render() {
     return (
       <div>
-        {this.state.message || 'loading...'}
         <MyDocs className="table-responsive-sm" />
         <SharedDocs />
+        {this.state.message || 'loading...'}
       </div>
     );
   }

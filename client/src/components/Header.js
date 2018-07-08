@@ -4,16 +4,14 @@ import { Link } from 'react-router-dom';
 class Header extends Component {
   renderLinks() {
     if (this.props.auth) {
-      // show a link to sign out
       return [
         <li className="nav-item" key={'hello'}>
           <Link className="nav-link " to="/">Home</Link>
         </li>,
         <li><Link
           className="btn btn-success my-2 my-sm-0"
-          to="/newdocument"
+          to="/newdoc"
           role="button"
-
         >
           New Document</Link></li>,
         <li className="nav-item" key={'documents'}>
@@ -40,9 +38,9 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-light">
         <Link to="/" className="navbar-brand">
-          <img className="navbar-brand" src="./logo.png" width="80" height="40" alt="logo" />
+          <img className="navbar-brand" src="./logo.png" width="120" height="60" alt="logo" />
         </Link>
-        <ul className="nav ">
+        <ul className="nav">
           {this.renderLinks()}
         </ul>
       </nav>

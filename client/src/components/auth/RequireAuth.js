@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default ChildComponent => {
+export default (ChildComponent, auth) => {
     class ComposedComponent extends Component {
         componentDidMount() {
             this.shouldNavigateAway();
@@ -11,7 +11,7 @@ export default ChildComponent => {
         }
 
         shouldNavigateAway() {
-            if (!this.props.auth) {
+            if (!auth) {
                 this.props.history.push('/');
             }
         }
