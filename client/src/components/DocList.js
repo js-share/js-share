@@ -13,46 +13,15 @@ class DocList extends Component {
   }
 
   componentDidMount() {
-    // axios.get('/api/getdocuments')
-    //   .then(res => {
-    //     this.setState({
-    //       my_docs: res.data.owned,
-    //       shared_docs: res.data.permitted
-    //     });
-    //   })
-
-    this.setState({
-      my_docs: [
-        {
-          "doc_id": 888,
-          "owner": "Loka",
-          "name": "Recursion",
-          "last_updated": "2018-07-08 12:22:30.583"
-        },
-        {
-          "doc_id": 889,
-          "owner": "Charlie",
-          "name": "For Loops",
-          "last_updated": "2018-07-08 12:22:30.583"
-        }
-      ],
-      shared_docs: [
-        {
-          "doc_id": 88338,
-          "owner": "Leo",
-          "name": "Recursion",
-          "last_updated": "2018-07-08 12:22:30.583"
-        },
-        {
-          "doc_id": 8833779,
-          "owner": "Luna",
-          "name": "For Loops",
-          "last_updated": "2018-07-08 12:22:30.583"
-        }
-      ]
-    })
+    axios.get('/api/getdocuments')
+      .then(res => {
+        this.setState({
+          my_docs: res.data.owned,
+          shared_docs: res.data.permitted
+        });
+      });
   }
-
+  
   render() {
     return (
       <div>
