@@ -11,6 +11,7 @@ module.exports = function(pool) {
         pool.query(queryText, values).then(result => {
             console.log('data saved')
             res.locals.doc_id = result.rows[0].doc_id;
+            console.log(res.locals.doc_id)
             next();
           }).catch(err => {
               console.log('end')
@@ -114,7 +115,8 @@ module.exports = function(pool) {
         getMyDocs:  (req, res, next) => {
             console.log('getting documents');
             res.locals.docs =  {owned: [], permitted: []};
-            const ownedDocs = 'SELECT doc_id, owner, name, last_updated FROM documents WHERE owner=$1';
+            const ownedDocs = 'SELECT documents.doc_id as doc_id, documents.owner as owner, documents.name as doc_name, documents.last_updated as last_updated, users.name AS user_name FROM documents INNER JOIN users ON users.id =documents.owner WHERE owner=$1 ORDER BY last_updated DESC';
+            // const ownedDocs = 'SELECT documents.doc_id, documents.owner, documents.name, documents.last_updated,  FROM documents WHERE owner=$1 ORDER BY last_updated DESC';
             const user_id = [req.user.id];
             console.log(req.user.id, req.user, "USER COOKIIIIE");
             pool.query(ownedDocs, user_id).then(result => {
@@ -130,6 +132,9 @@ module.exports = function(pool) {
         getPermittedDocs:  (req, res, next) => {
             console.log('getting permitted documents');
             const permittedDocs = ' SELECT documents.doc_id, documents.owner, documents.name, documents.last_updated FROM documents INNER JOIN document_permissions ON document_permissions.doc_id = documents.doc_id WHERE document_permissions.permitted_user=$1';
+
+
+// ORDER BY last_updated DESC
             const user_email = [req.user.email]; 
             console.log("got permitted documents", req.user.email);
             pool.query(permittedDocs, user_email).then(result => {
@@ -145,16 +150,17 @@ module.exports = function(pool) {
 
         
         getDocText: (req, res, next) => {
-            const queryText = 'SELECT text_content,  last_updated FROM documents WHERE doc_id=$1 ';
+            const queryText = 'SELECT text_content, name, last_updated FROM documents WHERE doc_id=$1 ';
             console.log(req.params.id, req.params);
             const value = [req.params.id];
             pool.query(queryText, value).then(result => {
                 console.log(result.rows[0], "here ate getdoctext")
                 if (result.rows[0]){
-                    res.locals.text_content = result.rows[0];
+                    res.locals.result = result.rows[0];
+                    
                 }
                 else {
-                    res.locals.text_content = "Document not found"
+                    res.locals.result = "Document not found"
                 }
                 
                 next();

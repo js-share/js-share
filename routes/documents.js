@@ -8,7 +8,7 @@ module.exports = (app, pool) => {
   dbController(pool).createDoc,
   dbController(pool).addPermittedUsers,
    (req, res) => {
-    res.send("SUCCESS MESSAGE");   
+    res.send({doc_id: res.locals.doc_id});
   });
 
   app.post('/api/docSettings',
@@ -38,7 +38,7 @@ module.exports = (app, pool) => {
   app.get('/api/document/:id',
   dbController(pool).getDocText, 
   (req, res) => {
-    res.send(res.locals.text_content);    
+    res.send(res.locals.result);    
   }
 )
 
