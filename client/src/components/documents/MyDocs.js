@@ -11,7 +11,8 @@ const renderDocs = (myDocs) => {
       <td><Link to={'/settings/' + doc.doc_id} className=" btn btn-md btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></Link> </td>
     </tr>
   ))
-} 
+}
+
 const MyDocs = (props) => (
   <div className="container">
     <h3>My Documents</h3>
