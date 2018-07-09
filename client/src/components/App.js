@@ -9,8 +9,6 @@ import EditDoc from './documents/EditDoc.js';
 import CreateDoc from './documents/CreateDoc.js';
 import Settings from './documents/Settings.js';
 
-// % AUTH ROUTES:
-import RequireAuth from './auth/RequireAuth.js';
 
 class App extends Component {
   constructor(props) {
@@ -35,10 +33,10 @@ class App extends Component {
           />
           <Switch>
             <Route exact path="/" component={() => <Home auth={this.state.auth} />} />
-            <Route path="/documents" component={() => <DocList auth={this.state.auth} />} />
-            <Route path="/editdocs" component={RequireAuth(EditDoc, this.state.auth)} />
-            <Route path="/newdoc" component={RequireAuth(CreateDoc, this.state.auth)} />
-            <Route path="/settings" component={RequireAuth(Settings, this.state.auth)} />
+            <Route path="/documents" component={() => <DocList />} />
+            <Route path="/newdoc" component={CreateDoc} />
+            <Route path="/editdoc" component={EditDoc} />
+            <Route path="/settings/:id" component={Settings} />
           </Switch>
         </div>
       </BrowserRouter>

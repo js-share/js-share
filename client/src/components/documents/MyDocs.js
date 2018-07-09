@@ -19,7 +19,7 @@ const MyDocs = () => (
           <th scope="row">1</th>
           <td>Mark</td>
           <td>Otto</td>
-          <td>@mdo</td>
+          <td>{Date.now()}</td>
           <td><button className="btn btn-sm btn-secondary">Edit Document</button></td>
           <td><button className="h-75 btn btn-md  btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></button> </td>
         </tr>
