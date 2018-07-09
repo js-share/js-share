@@ -10,6 +10,7 @@ module.exports = function (pool) {
 
             pool.query(queryText, values).then(result => {
                 console.log('data saved')
+                console.log(result.rows[0].doc_id);
                 res.locals.doc_id = result.rows[0].doc_id;
                 console.log(res.locals.doc_id)
                 next();
@@ -26,7 +27,9 @@ module.exports = function (pool) {
             const values = [];
             //// POSSIBLE BUG
             const doc_id = res.locals.doc_id ? res.locals.doc_id : req.body.doc_id;
-
+            
+            console.log(req.body.permitted_users);
+            
             req.body.permitted_users.forEach(email => {
                 values.push([doc_id, email])
             })
