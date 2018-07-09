@@ -15,6 +15,15 @@ class EditDoc extends Component {
     this.updateCode = this.updateCode.bind(this);
     this.runCode = this.runCode.bind(this);
     this.clearConsole = this.clearConsole.bind(this);
+    this.saveCode = this.saveCode.bind(this);
+  }
+
+  saveCode() {
+    let docId = this.props.location.pathname.slice(9);
+    axios.put(`/api/document/${docId}`, { text_content: this.state.code })
+      .then(res => {
+        console.log('Success', res.data)
+      }).catch(err => console.log(err));
   }
 
   clearConsole() {
@@ -76,7 +85,7 @@ class EditDoc extends Component {
                     <Link className="nav-link disabled" to="/documents">Cancel</Link>
                   </li>
                   <li className="nav-item">
-                    <button className="nav-link active">Save</button>
+                    <button onClick={this.saveCode} className="nav-link active">Save</button>
                   </li>
                 </ul>
               </div>
@@ -109,8 +118,8 @@ class EditDoc extends Component {
             <div className="card-body">
               <h5 className="card-title">JS</h5>
               <div className="card-text" rows="12">
-                <div class="form-group">
-                  <textarea class="form-control rounded-0" value={this.state.console} id="ConsoleOutput" rows="10"></textarea>
+                <div className="form-group">
+                  <textarea className="form-control rounded-0" value={this.state.console} id="ConsoleOutput" rows="10"></textarea>
                 </div>
               </div>
             </div>
