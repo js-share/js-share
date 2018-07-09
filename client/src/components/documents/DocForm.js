@@ -35,7 +35,7 @@ class DocForm extends Component {
     axios.post(
       '/api/createdoc', {
         'name': this.state.docTitle,
-        'permitted_users': this.state.sharedUsers.split('\n')
+        'permitted_users': this.state.sharedUsers ? this.state.sharedUsers.split('\n') : [] // separately handle empty string
       })
       .then(
         res => {
