@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "js_share_client",
   "version": "0.1.0",
   "private": true,
   "proxy": {
@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "codemirror": "^5.39.0",
     "react": "^16.4.1",
     "react-codemirror": "^1.0.0",
     "react-codemirror-runmode": "^1.0.4",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
-    "redux-form": "^7.4.2"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
