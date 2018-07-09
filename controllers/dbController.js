@@ -18,6 +18,9 @@ module.exports = function(pool) {
           });
      },
          addPermittedUsers:  (req, res, next) => {  
+           // if there are no permitted users to add, do nothing
+           if (req.body.permitted_users.length === 0) next();
+           
          // res.locals.doc_id provides us the doc_id.. which was declared in createDoc
             const values = [];
             //// POSSIBLE BUG 
@@ -26,6 +29,7 @@ module.exports = function(pool) {
             req.body.permitted_users.forEach( email => {
                 values.push([doc_id, email])
             })
+            
             const sql = format('INSERT INTO document_permissions (doc_id, permitted_user) VALUES %L', values);
 
             pool.query(sql).then(result => {

@@ -58,8 +58,8 @@ class DocForm extends Component {
     if (!this.props.docId) {
       this.setState({ init: true });
     }
-    //if docId make axios get request to server for docId
-
+    // if docId make axios get request to server for docTitle and sharedUsers
+    // axios.get('/api/')
   }
 
   //API Call in component did mount that returns list of documents and users associated with document
