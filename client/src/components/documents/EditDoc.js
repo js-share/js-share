@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import CM from './CodeMirror';
+import ConsoleOutput from './ConsoleOutput';
 
 const sampleCode = `const renderDocs = (sharedDocs) => {
   return sharedDocs.map((doc) => (
@@ -19,15 +21,30 @@ class EditDoc extends Component {
     super(props)
     this.state = {
       init: false,
-      code: sampleCode
+      code: sampleCode,
+      docTitle: ''
     };
 
     this.updateCode = this.updateCode.bind(this);
   }
   updateCode(newCode) { this.setState({ code: newCode }) }
 
+  componentDidMount() {
+    let docId = this.props.location.pathname.slice(9);
+    console.log(docId)
+    // if docId make axios get request to server for docTitle and sharedUsers
+    axios.get(`/api/document/${docId}`)
+      .then(res => {
+        this.setState({
+          init: true,
+          docTitle: res.data.name
+        });
+      }).catch(err => console.log(err));
+  }
+
   render() {
     // let options = { lineNumbers: true, mode: 'javascript' };
+    if (!this.state.init) return null;
     return (
       <div className='container'>
         <div className="card-group">
@@ -44,7 +61,7 @@ class EditDoc extends Component {
                 </ul>
               </div>
               <div className="card-body">
-                <h5 className="card-title">Document Title</h5>
+                <h5 className="card-title">{this.state.docTitle}</h5>
               </div>
             </div>
             <div className="card-body">
@@ -71,8 +88,7 @@ class EditDoc extends Component {
             </div>
             <div className="card-body">
               <h5 className="card-title">JS</h5>
-              <div className="card-text">
-              </div>
+              <div className="card-text" rows="12">{<ConsoleOutput code={'RESULTS'} value='use strict' language='javascript' />}</div>
             </div>
           </div>
         </div>

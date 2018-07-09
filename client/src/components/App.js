@@ -36,7 +36,7 @@ class App extends Component {
             <Route exact path="/" component={() => <Home auth={this.state.auth} />} />
             <Route path="/documents" component={() => <DocList />} />
             <Route path="/newdoc" component={CreateDoc} />
-            <Route path="/editdoc/:id" component={EditDoc} />
+            <Route path="/editdoc/:id" component={EditDoc}  />
             <Route path="/settings/:id" component={Settings} />
           </Switch>
         </div>
