@@ -5,14 +5,16 @@ import 'codemirror/mode/javascript/javascript'
 import Highlighter from 'react-codemirror-runmode'
 import React from 'react';
 
+const SyntaxHighlight = (props) => {
+  // const { value, language } = props
 
-const SyntaxHighlight = () => (
-  <Highlighter
-    codeMirror={CodeMirror}
-    theme='solarized'
-    value='console.log(adam)'
-    language='javascript'
-  />
-)
-
+  return (
+    <Highlighter className='container w-60'
+      codeMirror={CodeMirror}
+      theme='solarized'
+      value={props.code}
+      language='javascript'
+    />
+  )
+}
 export default SyntaxHighlight;
