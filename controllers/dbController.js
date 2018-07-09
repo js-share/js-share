@@ -131,8 +131,7 @@ module.exports = function (pool) {
         },
         getPermittedDocs: (req, res, next) => {
             console.log('getting permitted documents');
-            const permittedDocs = ' SELECT documents.doc_id, documents.owner, documents.name, documents.last_updated FROM documents INNER JOIN document_permissions ON document_permissions.doc_id = documents.doc_id WHERE document_permissions.permitted_user=$1';
-
+            const permittedDocs = 'SELECT documents.doc_id as doc_id, documents.owner as owner, users.name as user_name, documents.name as name, documents.last_updated as last_updated FROM documents INNER JOIN document_permissions ON document_permissions.doc_id = documents.doc_id INNER JOIN users ON documents.owner  = users.id           WHERE document_permissions.permitted_user=$1';
 
             // ORDER BY last_updated DESC
             const user_email = [req.user.email];
