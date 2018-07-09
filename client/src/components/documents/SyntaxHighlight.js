@@ -1,9 +1,9 @@
-import CodeMirror from 'codemirror'
+import React from 'react';
+import CodeMirror from 'react-codemirror'
 import 'codemirror/addon/runmode/runmode'
 import 'codemirror/mode/meta'
 import 'codemirror/mode/javascript/javascript'
 import Highlighter from 'react-codemirror-runmode'
-import React from 'react';
 
 const SyntaxHighlight = (props) => {
   // const { value, language } = props
