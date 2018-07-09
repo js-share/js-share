@@ -31,5 +31,10 @@ require('./routes/documents')(app, pool);
 
 // set up server
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+const server = app.listen(port, () => console.log(`Server listening on port ${port}`));
+
+// set up sockets
+const io = require('socket.io')(server);
+require('./socketRooms/defineSockets')(io, app);
+
 
