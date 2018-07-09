@@ -19,6 +19,14 @@ module.exports = (app, pool) => {
     res.send('Document settings updated!');   
   });
 
+  // GET Request - docTitle and sharedUsers
+  app.get('/api/docSettings/:id',
+  dbController(pool).getDocTitle,
+  dbController(pool).getPermittedUsers,
+  (req, res) => {
+    res.send(res.locals.formInfo);
+  });
+
   app.get('/api/getdocuments',
   dbController(pool).getMyDocs,
   dbController(pool).getPermittedDocs,
@@ -26,7 +34,7 @@ module.exports = (app, pool) => {
     res.send(res.locals.docs);   
   }); 
 
- //GET Request - getting text from id
+  // GET Request - getting text from id
   app.get('/api/document/:id',
   dbController(pool).getDocText, 
   (req, res) => {

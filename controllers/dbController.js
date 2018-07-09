@@ -54,10 +54,7 @@ module.exports = function(pool) {
             }).catch(err => {
                 if (err) throw new Error(err);
             })
-            next();
         },
-
-
 
         deletePermittedUsers:  (req, res, next) => {
             // TO DO: seems to persist....
@@ -72,11 +69,32 @@ module.exports = function(pool) {
                   console.log('end')
                 if (err) throw new Error(err);
               });
-            console.log("deleted permissions");
-            next();
         },
-
-
+        
+        getDocTitle: (req, res, next) => {
+          const queryText = 'SELECT name from documents WHERE doc_id = $1';
+          const values = [req.params.id];
+          
+          pool.query(queryText, values).then(results => {
+            res.locals.formInfo = {docTitle: results.rows[0].name};
+            next();
+          }).catch(err => {
+              if (err) throw new Error(err);
+          });
+        },
+        
+        getPermittedUsers: (req, res, next) => {
+          const queryText = 'SELECT permitted_user from document_permissions WHERE doc_id = $1';
+          const values = [req.params.id];
+          
+          pool.query(queryText, values).then(results => {
+            res.locals.formInfo.sharedUsers = results.rows.length ? results.rows.map(row => row.permitted_user).join('\n') : '';
+            next();
+          }).catch(err => {
+              if (err) throw new Error(err);
+          });
+        },
+        
         saveDocumentContent:  (req, res, next) => {
 // sends req.body.text_content 
             const queryText = 'UPDATE documents SET text_content =$1, last_updated= $2 WHERE doc_id=$3 RETURNING *';

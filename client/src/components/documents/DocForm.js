@@ -31,13 +31,26 @@ class DocForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
-    axios.post(
-      '/api/createdoc', {
-        'name': this.state.docTitle,
-        'permitted_users': this.state.sharedUsers ? this.state.sharedUsers.split('\n') : [] // separately handle empty string
-      })
-      .then(
+    
+    let request;
+    if (!this.props.docId) {
+      request = axios.post(
+        '/api/createdoc', {
+          'name': this.state.docTitle,
+          'permitted_users': this.state.sharedUsers ? this.state.sharedUsers.split('\n') : [] // separately handle empty string
+        });
+    }
+    else {
+      request = axios.post(
+        '/api/docSettings', {
+          'doc_id': this.props.docId,
+          'name': this.state.docTitle,
+          'permitted_users': this.state.sharedUsers ? this.state.sharedUsers.split('\n') : [] // separately handle empty string
+        }
+      );
+    }
+    
+    request.then(
         res => {
           console.log(res)
           //redirect back to list of documents
@@ -59,13 +72,19 @@ class DocForm extends Component {
       this.setState({ init: true });
     }
     // if docId make axios get request to server for docTitle and sharedUsers
-    // axios.get('/api/')
+    axios.get(`/api/docSettings/${this.props.docId}`).then(res => {
+      this.setState({
+        init: true,
+        docTitle: res.data.docTitle,
+        sharedUsers: res.data.sharedUsers
+      });
+    }).catch(err => console.log(err));
   }
 
   //API Call in component did mount that returns list of documents and users associated with document
   render() {
     if (!this.state.init) {
-      return <div>Load message</div>
+      return <div></div>
     }
     return (
       <div className="container">
