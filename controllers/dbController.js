@@ -1,22 +1,12 @@
 const pg = require('pg');
 const format = require('pg-format');
 
-// doc_id       | character varying | not null
-//  owner        | character varying | not null
-//  name         | character varying | not null
-//  text_content | character varying | not null
-//  last_updated | date              | not null
-let newDate;
+
 module.exports = function(pool) {
     return {
         createDoc: (req, res, next) => {
-
-        // console.log('inside createDOC', req.app.locals.user);
-        // console.log(req.body);
-
         const queryText = 'INSERT INTO documents ( owner, name, text_content, last_updated) VALUES($1, $2, $3, $4) RETURNING *';
-        newDate = new Date();
-        const values = [req.user.id, req.body.name, '', newDate];
+        const values = [req.user.id, req.body.name, '', new Date()];
   
         pool.query(queryText, values).then(result => {
             console.log('data saved')
@@ -45,14 +35,21 @@ module.exports = function(pool) {
                     console.log('caught error')
                 if (err) throw new Error(err);
                 });
-
-        
          },
 
 
-
-         editDoc:  (req, res, next) => {
+         editDocTitle:  (req, res, next) => {
             console.log('edited doc');
+            // assumes req.body.name req.body.doc_id exists from the request
+            const queryText = 'UPDATE documents SET name = $1, last_updated=$2 WHERE doc_id = $3';
+            const values = [req.body.name, new Date(), req.body.doc_id ]
+
+            pool.query(queryText, values).then(results => {
+                console.log('Document name updated');
+                next();
+            }).catch(err => {
+                if (err) throw new Error(err);
+            })
             next();
         },
 
@@ -64,7 +61,7 @@ module.exports = function(pool) {
             const queryText = 'DELETE FROM document_permissions WHERE doc_id=$1';
             const values = [req.body.doc_id];
             
-            pool.query(queryText, values).then(result => {
+            pool.query(queryText, values).then(result =>{
                 console.log('permissions revoked')
                 next();
               }).catch(err => {
@@ -77,6 +74,17 @@ module.exports = function(pool) {
 
 
         saveDocumentContent:  (req, res, next) => {
+// sends req.body.text_content 
+            const queryText = 'UPDATE documents SET text_content =$1, last_updated= $2 WHERE doc_id=$3 RETURNING *';
+            const value = [req.body.text_content, new Date(), req.body.doc_id];
+            pool.query(queryText, value).then(result => {
+                console.log(result.row)
+                // res.locals.text_content = result.row;
+                next();
+            }).catch(err => {
+                console.log('end');
+                if (err) throw new Error(err);
+            }); 
 
         },
 
@@ -113,6 +121,26 @@ module.exports = function(pool) {
               }); 
         },
 
+        
+        getDocText: (req, res, next) => {
+            const queryText = 'SELECT text_content,  last_updated FROM documents WHERE doc_id=$1 ';
+            console.log(req.params.id, req.params);
+            const value = [req.params.id];
+            pool.query(queryText, value).then(result => {
+                console.log(result.rows[0], "here ate getdoctext")
+                if (result.rows[0]){
+                    res.locals.text_content = result.rows[0];
+                }
+                else {
+                    res.locals.text_content = "Document not found"
+                }
+                
+                next();
+              }).catch(err => {
+                  console.log('end, found nothing');
+                if (err) throw new Error(err);
+              }); 
+        }
 
      }
     
