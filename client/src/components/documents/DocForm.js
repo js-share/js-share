@@ -31,7 +31,7 @@ class DocForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    
+
     let request;
     if (!this.props.docId) {
       request = axios.post(
@@ -49,16 +49,15 @@ class DocForm extends Component {
         }
       );
     }
-    
+
     request.then(
-        res => {
-          console.log(res)
-          //redirect back to list of documents
-          //pass in history property for redirect to work
-          this.props.history.push('/editdoc');
-          console.log(this.props.history)
-        }
-      )
+      res => {
+        console.log(res.data)
+        //redirect back to list of documents
+        //pass in history property for redirect to work
+        this.props.history.push('/editdoc/' + this.props.docId);
+      }
+    )
       .catch(
         (err) => {
           console.log(err);

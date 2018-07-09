@@ -8,7 +8,7 @@ const renderDocs = (sharedDocs) => {
       <td>{doc.name}</td>
       <td>{doc.last_updated}</td>
       <td><Link to={'/editdoc/' + doc.doc_id} className="btn btn-sm btn-secondary">Edit Document</Link></td>
-      <td><Link to={'/settings/' + doc.doc_id} className=" btn btn-md btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></Link> </td>
+      <td></td>
     </tr>
   ))
 }

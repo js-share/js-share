@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SyntaxHighlight from './SyntaxHighlight';
-
+import { Link } from 'react-router-dom';
+import LiveEditor from './LiveEditor';
 
 const sampleCode = `const renderDocs = (sharedDocs) => {
   return sharedDocs.map((doc) => (
@@ -27,58 +27,51 @@ class EditDoc extends Component {
   updateCode(newCode) { this.setState({ code: newCode }) }
 
   render() {
-    let options = { lineNumbers: true, mode: 'javascript' };
+    // let options = { lineNumbers: true, mode: 'javascript' };
     return (
       <div className='container'>
         <div className="card-group">
           <div className="card">
-            <div class="card text-center">
-              <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="/documents">Cancel</a>
+            <div className="card text-center">
+              <div className="card-header">
+                <ul className="nav nav-pills card-header-pills">
+                  <li className="nav-item">
+                    <Link className="nav-link disabled" to="/documents">Cancel</Link>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Save</a>
+                  <li className="nav-item">
+                    <button className="nav-link active">Save</button>
                   </li>
                 </ul>
               </div>
-              <div class="card-body">
-                <h5 class="card-title">Document Title</h5>
+              <div className="card-body">
+                <h5 className="card-title">Document Title</h5>
               </div>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Enter Code Here</h5>
-              <p className="card-text" rows="12">{<SyntaxHighlight code={this.state.code} value='use strict' language='javascript' />}</p>
+              <LiveEditor />
             </div>
-            <div className="card-footer">
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </div>
+
           </div>
           <div className="card">
-            <div class="card text-center">
-              <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Clear</a>
+            <div className="card text-center">
+              <div className="card-header">
+                <ul className="nav nav-pills card-header-pills">
+                  <li className="nav-item">
+                    <button className="nav-link disabled">Clear</button>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Run</a>
+                  <li className="nav-item">
+                    <button className="nav-link active">Run</button>
                   </li>
                 </ul>
               </div>
-              <div class="card-body">
-                <h5 class="card-title">Console</h5>
+              <div className="card-body">
+                <h5 className="card-title">Console</h5>
               </div>
             </div>
             <div className="card-body">
-              <h5 className="card-title">Here is where the executed code will be displayed</h5>
-              <p className="card-text">
-                <SyntaxHighlight code={this.state.code} value='use strict' language='javascript' />
-              </p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">Last updated 3 mins ago</small>
+              <h5 className="card-title">JS</h5>
+              <div className="card-text">
+              </div>
             </div>
           </div>
         </div>
