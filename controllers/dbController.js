@@ -99,7 +99,7 @@ module.exports = function(pool) {
         saveDocumentContent:  (req, res, next) => {
 // sends req.body.text_content 
             const queryText = 'UPDATE documents SET text_content =$1, last_updated= $2 WHERE doc_id=$3 RETURNING *';
-            const value = [req.body.text_content, new Date(), req.body.doc_id];
+            const value = [req.body.text_content, new Date(), req.params.id];
             pool.query(queryText, value).then(result => {
                 console.log(result.row)
                 // res.locals.text_content = result.row;
@@ -131,8 +131,7 @@ module.exports = function(pool) {
         },
         getPermittedDocs:  (req, res, next) => {
             console.log('getting permitted documents');
-            const permittedDocs = ' SELECT documents.doc_id, documents.owner, documents.name, documents.last_updated FROM documents INNER JOIN document_permissions ON document_permissions.doc_id = documents.doc_id WHERE document_permissions.permitted_user=$1';
-
+            const permittedDocs = 'SELECT documents.doc_id as doc_id, documents.owner as owner, users.name as user_name, documents.name as name, documents.last_updated as last_updated FROM documents INNER JOIN document_permissions ON document_permissions.doc_id = documents.doc_id INNER JOIN users ON documents.owner  = users.id           WHERE document_permissions.permitted_user=$1';
 
 // ORDER BY last_updated DESC
             const user_email = [req.user.email]; 
