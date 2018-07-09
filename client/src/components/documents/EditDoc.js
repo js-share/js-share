@@ -30,19 +30,58 @@ class EditDoc extends Component {
     let options = { lineNumbers: true, mode: 'javascript' };
     return (
       <div className='container'>
-        <h3 className="p-20">Edit Document</h3>
-        <table className='table table-striped'>
-          <thead className="float-right p-2">
-            <button className="m-2 btn btn-danger">Back</button>
-            <button className="m-2 btn btn-success">Run</button>
-            <button className="m-2 btn btn-primary">Save</button>
-          </thead>
-          <textarea rows="4" cols="50">
-            Enter Your Text Here
-          </textarea>
-          <textarea rows="4" cols="50">{'Console Log'}</textarea>
-        </table>
-        <SyntaxHighlight code={this.state.code} value='use strict' language='javascript' />
+        <div className="card-group">
+          <div className="card">
+            <div class="card text-center">
+              <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                  <li class="nav-item">
+                    <a class="nav-link disabled" href="/documents">Cancel</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">Save</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Document Title</h5>
+              </div>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Enter Code Here</h5>
+              <p className="card-text" rows="12">{<SyntaxHighlight code={this.state.code} value='use strict' language='javascript' />}</p>
+            </div>
+            <div className="card-footer">
+              <small className="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+          <div className="card">
+            <div class="card text-center">
+              <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                  <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Clear</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">Run</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Console</h5>
+              </div>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">Here is where the executed code will be displayed</h5>
+              <p className="card-text">
+                <SyntaxHighlight code={this.state.code} value='use strict' language='javascript' />
+              </p>
+            </div>
+            <div className="card-footer">
+              <small className="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
