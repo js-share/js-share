@@ -35,6 +35,6 @@ const server = app.listen(port, () => console.log(`Server listening on port ${po
 
 // set up sockets
 const io = require('socket.io')(server);
-require('./socketRooms/defineSockets')(io, app);
+require('./socketRooms/defineSockets')(io);
 
 

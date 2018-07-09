@@ -1,5 +1,5 @@
 // define socket behavior
-module.exports = (io, app) => {
+module.exports = io => {
   io.on('connection', socket => {
     // user starts editing a document
     // data = {docId}
@@ -10,7 +10,7 @@ module.exports = (io, app) => {
     // user makes a change to the javascript code
     // data = {docId, text}
     socket.on('edit text', data => {
-      socket.broadcast.to(data.docId).emit('receive text', data.text);
+      socket.broadcast.to(data.docId).emit('receive text', {text: data.text});
     });
     
     // user leaves the document

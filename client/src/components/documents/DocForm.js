@@ -55,7 +55,8 @@ class DocForm extends Component {
         console.log(res.data)
         //redirect back to list of documents
         //pass in history property for redirect to work
-        this.props.history.push('/editdoc/' + this.props.docId || res.data.doc_id);
+        // this.props.history.push('/editdoc/' + res.data.doc_id || this.props.docId);
+        this.props.history.push('/editdoc/' + (this.props.docId || res.data.doc_id));
       }
     )
       .catch(
