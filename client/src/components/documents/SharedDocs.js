@@ -7,7 +7,7 @@ const renderDocs = (sharedDocs) => {
       <td>{doc.owner}</td>
       <td>{doc.name}</td>
       <td>{doc.last_updated}</td>
-      <td><Link to={'/editdoc/' + doc.doc_id} className="btn btn-sm btn-secondary">Edit Document</Link></td>
+      <td><Link to={'/editdoc/' + doc.doc_id} className="btn btn-sm btn-primary">Edit Document</Link></td>
       <td></td>
     </tr>
   ))
@@ -15,7 +15,7 @@ const renderDocs = (sharedDocs) => {
 
 const SharedDocs = (props) => (
   <div className="container">
-    <h3>Shared Documents</h3>
+    <h3 className="text-info">Shared Documents</h3>
     <table className="table table-striped">
       <thead>
         <tr>
