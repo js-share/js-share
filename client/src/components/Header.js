@@ -13,15 +13,15 @@ class Header extends Component {
         <li className="nav-item" key={'hello'}>
           <Link className="nav-link " to="/">Home</Link>
         </li>,
+        <li className="nav-item" key={'documents'}>
+          <Link className="nav-link" to="/documents">Documents</Link>
+        </li>,
         <li className="nav-item" key={'newdoc'}><Link
-          className="btn btn-success my-2 my-sm-0"
+          className="btn btn-success"
           to="/newdoc"
           role="button"
         >
           New Document</Link></li>,
-        <li className="nav-item" key={'documents'}>
-          <Link className="nav-link" to="/documents">Documents</Link>
-        </li>,
         <li className="nav-item" key={'signout'}>
           <a className="nav-link float-right" href="/api/logout">Sign Out</a>
         </li>
@@ -45,7 +45,7 @@ class Header extends Component {
         <Link to="/" className="navbar-brand">
           <img className="navbar-brand" src="./logo.png" width="120" height="60" alt="logo" />
         </Link>
-        <ul className="nav">
+        <ul className="nav ">
           {this.renderLinks()}
         </ul>
       </nav>
