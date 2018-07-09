@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import CM from './CodeMirror';
-import ConsoleOutput from './ConsoleOutput';
 
 class EditDoc extends Component {
   constructor(props) {
@@ -15,8 +14,14 @@ class EditDoc extends Component {
     };
     this.updateCode = this.updateCode.bind(this);
     this.runCode = this.runCode.bind(this);
+    this.clearConsole = this.clearConsole.bind(this);
   }
 
+  clearConsole() {
+    this.setState({
+      console: ''
+    })
+  }
   updateCode(newCode) {
     this.setState({
       code: newCode
@@ -90,7 +95,7 @@ class EditDoc extends Component {
               <div className="card-header">
                 <ul className="nav nav-pills card-header-pills">
                   <li className="nav-item">
-                    <button className="nav-link disabled">Clear</button>
+                    <button onClick={this.clearConsole} className="nav-link disabled">Clear</button>
                   </li>
                   <li className="nav-item">
                     <button onClick={this.runCode} className="nav-link active">Run</button>
@@ -105,12 +110,8 @@ class EditDoc extends Component {
               <h5 className="card-title">JS</h5>
               <div className="card-text" rows="12">
                 <div class="form-group">
-                  <textarea class="form-control rounded-0" id="ConsoleOutput" rows="10">{this.state.console}</textarea>
+                  <textarea class="form-control rounded-0" value={this.state.console} id="ConsoleOutput" rows="10"></textarea>
                 </div>
-                {<ConsoleOutput
-                  console={this.state.console}
-                  value='use strict'
-                  language='javascript' />}
               </div>
             </div>
           </div>
