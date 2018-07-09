@@ -12,7 +12,7 @@ module.exports = function(pool) {
     // set up a client from the pool, and make a query using that client
     console.log('starting deserialize user');
     
-    const queryText = 'select id from users where id = $1';
+    const queryText = 'select * from users where id = $1';
     
     pool.query(queryText, [id]).then(result => {
       const user = result.rows[0];
