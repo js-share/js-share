@@ -13,7 +13,7 @@ class DocList extends Component {
   }
 
   componentDidMount() {
-    // axios.get('/api/getdocument')
+    // axios.get('/api/getdocuments')
     //   .then(res => {
     //     this.setState({
     //       my_docs: res.data.owned,
