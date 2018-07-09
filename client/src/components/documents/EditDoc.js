@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import LiveEditor from './LiveEditor';
+import CM from './CodeMirror';
 
 const sampleCode = `const renderDocs = (sharedDocs) => {
   return sharedDocs.map((doc) => (
@@ -48,7 +48,8 @@ class EditDoc extends Component {
               </div>
             </div>
             <div className="card-body">
-              <LiveEditor />
+              <h5 className="card-title">Enter Code Here</h5>
+              <div className="card-text" rows="12">{<CM code={this.state.code} value='use strict' language='javascript' />}</div>
             </div>
 
           </div>
