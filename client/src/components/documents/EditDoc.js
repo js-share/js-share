@@ -2,32 +2,51 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import CM from './CodeMirror';
-import ConsoleOutput from './ConsoleOutput';
-
-const sampleCode = `const renderDocs = (sharedDocs) => {
-  return sharedDocs.map((doc) => (
-    <tr key={doc.doc_id}>
-      <td>{doc.owner}</td>
-      <td>{doc.name}</td>
-      <td>{doc.last_updated}</td>
-      <td><Link to={'/editdoc/' + doc.doc_id} className="btn btn-sm btn-secondary">Edit Document</Link></td>
-      <td><Link to={'/settings/' + doc.doc_id} className=" btn btn-md btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></Link> </td>
-    </tr>
-  ))
-}`
 
 class EditDoc extends Component {
   constructor(props) {
     super(props)
     this.state = {
       init: false,
-      code: sampleCode,
+      code: '',
+      console: '',
       docTitle: ''
     };
-
     this.updateCode = this.updateCode.bind(this);
+    this.runCode = this.runCode.bind(this);
+    this.clearConsole = this.clearConsole.bind(this);
   }
-  updateCode(newCode) { this.setState({ code: newCode }) }
+
+  clearConsole() {
+    this.setState({
+      console: ''
+    })
+  }
+  updateCode(newCode) {
+    this.setState({
+      code: newCode
+    })
+  }
+
+  runCode() {
+    const before = 'var results = []; function logger(value) {results.push(value);}; console.log = logger; ';
+    const after = ' results';
+    const results = eval('[2+2]');
+    // const results = eval(before + 'console.log(3);' + after);
+    // const results = eval('2 + 2');
+    console.log(results)
+    console.log(typeof results);
+    console.log('hi3')
+    let consoleText = this.state.console;
+    results.forEach(result => {
+      consoleText += result;
+      consoleText += '\n';
+    })
+    console.log(consoleText);
+    this.setState({
+      console: consoleText
+    })
+  }
 
   componentDidMount() {
     let docId = this.props.location.pathname.slice(9);
@@ -37,7 +56,8 @@ class EditDoc extends Component {
       .then(res => {
         this.setState({
           init: true,
-          docTitle: res.data.name
+          docTitle: res.data.name,
+          code: res.data.text_content
         });
       }).catch(err => console.log(err));
   }
@@ -66,7 +86,7 @@ class EditDoc extends Component {
             </div>
             <div className="card-body">
               <h5 className="card-title">Enter Code Here</h5>
-              <div className="card-text" rows="12">{<CM code={this.state.code} value='use strict' language='javascript' />}</div>
+              <div className="card-text" rows="12">{<CM code={this.state.code} updateCode={this.updateCode} value='use strict' language='javascript' />}</div>
             </div>
 
           </div>
@@ -75,10 +95,10 @@ class EditDoc extends Component {
               <div className="card-header">
                 <ul className="nav nav-pills card-header-pills">
                   <li className="nav-item">
-                    <button className="nav-link disabled">Clear</button>
+                    <button onClick={this.clearConsole} className="nav-link disabled">Clear</button>
                   </li>
                   <li className="nav-item">
-                    <button className="nav-link active">Run</button>
+                    <button onClick={this.runCode} className="nav-link active">Run</button>
                   </li>
                 </ul>
               </div>
@@ -88,7 +108,11 @@ class EditDoc extends Component {
             </div>
             <div className="card-body">
               <h5 className="card-title">JS</h5>
-              <div className="card-text" rows="12">{<ConsoleOutput code={'RESULTS'} value='use strict' language='javascript' />}</div>
+              <div className="card-text" rows="12">
+                <div class="form-group">
+                  <textarea class="form-control rounded-0" value={this.state.console} id="ConsoleOutput" rows="10"></textarea>
+                </div>
+              </div>
             </div>
           </div>
         </div>
