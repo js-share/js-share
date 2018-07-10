@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
-import CM from './CodeMirror';
 
 class EditDoc extends Component {
   constructor(props) {
@@ -32,15 +31,16 @@ class EditDoc extends Component {
       console: ''
     })
   }
-  
-  updateCode(newCode) {
+
+  updateCode(e) {
+
     let docId = this.props.location.pathname.slice(9);
     // socket broadcast to others
-    this.socket.emit('edit text', {docId, text: newCode});
-    
+    this.socket.emit('edit text', { docId, text: e.target.value });
+
     // set our own state
     this.setState({
-      code: newCode
+      code: e.target.value
     })
   }
 
@@ -75,36 +75,36 @@ class EditDoc extends Component {
           docTitle: res.data.name,
           code: res.data.text_content
         });
-        
+
         // set up sockets
         this.socket = io();
         this.socket.on('connect', () => {
           // emit join doc on connect
-          this.socket.emit('join doc', {docId});
+          this.socket.emit('join doc', { docId });
         });
-        
+
         // receive others' socket text broadcast event
         this.socket.on('receive text', data => {
           this.setState({
             code: data.text
           });
         });
-        
+
       }).catch(err => console.log(err));
   }
-  
+
   componentWillUnmount() {
     // if no socket to close, then return
     if (!this.socket) return;
-    
+
     let docId = this.props.location.pathname.slice(9);
-    this.socket.emit('leave doc', {docId});
+    this.socket.emit('leave doc', { docId });
   }
-  
+
   render() {
     // let options = { lineNumbers: true, mode: 'javascript' };
     if (!this.state.init) return null;
-    
+
     return (
       <div className='container'>
         <div className="card-group">
@@ -126,7 +126,9 @@ class EditDoc extends Component {
             </div>
             <div className="card-body">
               <h5 className="card-title">Enter Code Here</h5>
-              <div className="card-text" rows="12">{<CM code={this.state.code} updateCode={this.updateCode} value='use strict' language='javascript' />}</div>
+              <div className="card-text" rows="12">
+                <textarea className="form-control rounded-0" value={this.state.code} onChange={this.updateCode} id="DocText" rows="10"></textarea>
+              </div>
             </div>
 
           </div>

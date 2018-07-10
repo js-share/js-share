@@ -2,15 +2,18 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 const renderDocs = (sharedDocs) => {
-  return sharedDocs.map((doc) => (
-    <tr key={doc.doc_id}>
-      <td>{doc.owner}</td>
-      <td>{doc.name}</td>
-      <td>{doc.last_updated}</td>
-      <td><Link to={'/editdoc/' + doc.doc_id} className="btn btn-sm btn-primary">Edit Document</Link></td>
-      <td></td>
-    </tr>
-  ))
+  return sharedDocs.map((doc) => { 
+    const { user_name, doc_id, name, last_updated } = doc;
+    return (
+      <tr key={doc_id}>
+        <td>{user_name}</td>
+        <td>{name}</td>
+        <td>{last_updated}</td>
+        <td><Link to={'/editdoc/' + doc.doc_id} className="btn btn-sm btn-primary">Edit Document</Link></td>
+        <td></td>
+      </tr>
+    )
+  })
 }
 
 const SharedDocs = (props) => (
