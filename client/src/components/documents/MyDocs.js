@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 const renderDocs = (myDocs) => {
   return myDocs.map((doc) => {
     const {user_name, doc_id, doc_name, last_updated} = doc;
+    const date = new Date(last_updated);
+    
     return (
     <tr key={doc_id}>
       <td>{user_name}</td>
       <td>{doc_name}</td>
-      <td>{last_updated}</td>
+      <td>{date.toUTCString()}</td>
       <td><Link to={'/editdoc/' + doc_id} className="btn btn-sm btn-primary">Edit Document</Link></td>
       <td><Link to={'/settings/' + doc_id} className=" btn btn-md btn-light" ><span role="img" aria-label="gear">⚙️ Permissions</span></Link> </td>
     </tr>
