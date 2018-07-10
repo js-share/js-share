@@ -129,7 +129,7 @@ class EditDoc extends Component {
             <div className="card-body">
               <h5 className="card-title">Enter Code Here</h5>
               <div className="card-text" rows="12">
-                <textarea className="form-control rounded-0" value={this.state.code} onChange={this.updateCode} id="DocText" rows="10"></textarea>
+                <textarea className="form-control rounded-0" style={{fontFamily: 'monospace'}} value={this.state.code} onChange={this.updateCode} id="DocText" rows="10"></textarea>
               </div>
             </div>
 
@@ -154,7 +154,7 @@ class EditDoc extends Component {
               <h5 className="card-title">JS</h5>
               <div className="card-text" rows="12">
                 <div className="form-group">
-                  <textarea className="form-control rounded-0" value={this.state.console} id="ConsoleOutput" rows="10"></textarea>
+                  <textarea className="form-control rounded-0" style={{fontFamily: 'monospace'}} value={this.state.console} id="ConsoleOutput" rows="10"></textarea>
                 </div>
               </div>
             </div>
