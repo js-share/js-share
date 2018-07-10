@@ -48,7 +48,7 @@ class EditDoc extends Component {
     console.log('hi begin');
     
     const before = 'var results = []; function logger(value) {results.push(value);}; var console = {}; console.log = logger; ';
-    const after = ' results';
+    const after = '; results';
     const results = eval(before + this.state.code + after);
     
     console.log(results)
