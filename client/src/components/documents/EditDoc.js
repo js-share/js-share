@@ -45,14 +45,16 @@ class EditDoc extends Component {
   }
 
   runCode() {
-    const before = 'var results = []; function logger(value) {results.push(value);}; console.log = logger; ';
+    console.log('hi begin');
+    
+    const before = 'var results = []; function logger(value) {results.push(value);}; var console = {}; console.log = logger; ';
     const after = ' results';
-    const results = eval('[2+2]');
-    // const results = eval(before + 'console.log(3);' + after);
-    // const results = eval('2 + 2');
+    const results = eval(before + this.state.code + after);
+    
     console.log(results)
     console.log(typeof results);
-    console.log('hi3')
+    console.log('hi end');
+    
     let consoleText = this.state.console;
     results.forEach(result => {
       consoleText += result;
