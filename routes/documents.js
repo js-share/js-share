@@ -3,7 +3,6 @@ const dbController = require('../controllers/dbController');
 
   
 module.exports = (app, pool) => {
-  // define document routes here...
   app.post('/api/createdoc',
   dbController(pool).createDoc,
   dbController(pool).addPermittedUsers,
