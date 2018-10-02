@@ -9,7 +9,7 @@ const passport = require('passport');
 
 // set up postgres pool
 const {Pool} = require('pg');
-const pool = new Pool();
+const pool = new Pool({connectionString: process.env.pgURI});
 
 app.use(bodyParser.json());
 app.use(
@@ -31,5 +31,10 @@ require('./routes/documents')(app, pool);
 
 // set up server
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+const server = app.listen(port, () => console.log(`Server listening on port ${port}`));
+
+// set up sockets
+const io = require('socket.io')(server);
+require('./socketRooms/defineSockets')(io);
+
 

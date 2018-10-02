@@ -9,16 +9,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sgoldber61/react_app_tutorial.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sgoldber61/react_app_tutorial/issues"
-  },
-  "homepage": "https://github.com/sgoldber61/react_app_tutorial#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",

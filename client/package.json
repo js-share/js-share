@@ -1,19 +1,26 @@
 {
-  "name": "client",
+  "name": "js_share_client",
   "version": "0.1.0",
   "private": true,
   "proxy": {
     "/api/*": {
+      "target": "http://localhost:5000"
+    },
+    "/auth/*": {
+      "target": "http://localhost:5000"
+    },
+    "/socket.io/*": {
       "target": "http://localhost:5000"
     }
   },
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.4.1",
+    "react-codemirror": "^1.0.0",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "redux-form": "^7.4.2"
+    "socket.io-client": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
